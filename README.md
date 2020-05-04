@@ -1,4 +1,4 @@
-# Gaussian Process Animation
+# Animating Samples from Gaussian Distributions
 
 The animation below are samples from gaussians with different kernels.
 

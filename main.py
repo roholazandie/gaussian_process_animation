@@ -9,7 +9,7 @@ n_dims = 150
 n_frames = 100
 n_traces = 3
 
-x = np.linspace(0, 8, n_dims).reshape(-1, 1)
+x = np.linspace(0, 10, n_dims).reshape(-1, 1)
 kernel = compute_kernel(x, x, kernel=rbf_cov)
 
 gaussian_process_animation = GaussianProcessAnimation(kernel, n_dims=n_dims, n_frames=n_frames)
