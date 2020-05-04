@@ -149,5 +149,3 @@ fabric.properties
 data/*
 
 pytorch_tutorial/wandb/*
-
-*.gif
