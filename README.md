@@ -9,6 +9,10 @@ The animation below are samples from gaussians with different kernels.
 ![](gifs/ratquad_cov.gif)
 
 
+## Live Demo
+
+Go to [heroku app](https://gpkernels.herokuapp.com) to see a live demo.
+
 ## How to implement?
 
 
