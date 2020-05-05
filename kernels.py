@@ -86,13 +86,13 @@ def brownian_cov(t, t_prime, variance=1.):
         raise ValueError("For Brownian motion covariance only positive times are valid.")
 
 
-def compute_kernel(X, X2=None, kernel=None, **kwargs):
+def kernel(X, X2=None, kernel_func=None, **kwargs):
     """Compute the full covariance function given a kernel function for two data points."""
     if X2 is None:
         X2 = X
     K = np.zeros((X.shape[0], X2.shape[0]))
     for i in np.arange(X.shape[0]):
         for j in np.arange(X2.shape[0]):
-            K[i, j] = kernel(X[i, :], X2[j, :], **kwargs)
+            K[i, j] = kernel_func(X[i, :], X2[j, :], **kwargs)
 
     return K

@@ -1,2 +1,4 @@
-numpy
-matplotlib
+streamlit==0.58.0
+numpy==1.18.4
+matplotlib==3.2.1
+GPy==1.9.9

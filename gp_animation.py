@@ -5,7 +5,6 @@ class GaussianProcessAnimation:
 
     def __init__(self, kernel, n_dims=150, n_frames=100):
         '''
-
         :param kernel:
         :param n_dims:
         :param n_frames:
