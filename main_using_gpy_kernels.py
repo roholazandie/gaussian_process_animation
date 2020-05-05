@@ -2,8 +2,8 @@ import numpy as np
 from gp_animation import GaussianProcessAnimation
 from visualization import animate_multi_plots
 from GPy.kern import Matern32, Brownian, RBF, Cosine, Exponential, \
-    Linear, GridRBF, MLP, PeriodicMatern32, Spline, White, StdPeriodic
-
+    Linear, GridRBF, MLP, PeriodicMatern32, Spline, White,\
+    StdPeriodic, DomainKernel, LogisticBasisFuncKernel, Matern52, Symmetric, Prod
 
 n_dims = 150
 n_frames = 100
@@ -22,8 +22,12 @@ x = np.linspace(0, 10, n_dims)[:, np.newaxis]
 #kernel = PeriodicMatern32(input_dim=1)
 #kernel = Spline(input_dim=1)
 #kernel = White(input_dim=1)
-kernel = StdPeriodic(input_dim=1)
+#kernel = StdPeriodic(input_dim=1)
+#kernel = DomainKernel(input_dim=1, start=0, stop=5)
 
+kernel1 = LogisticBasisFuncKernel(input_dim=1, centers=[4])
+kernel2 = Matern52(input_dim=1)
+kernel = Prod(kernels=[kernel1, kernel2])
 
 kernel_matrix = kernel.K(x, x)
 

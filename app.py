@@ -7,23 +7,20 @@ from GPy.kern import Matern32, Brownian, RBF, Cosine, Exponential, \
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-
-# def animate_multi_plots(data, colors=None, title=None, save_file=None, interval=100):
 
 colors = None
 
 
 @st.cache
-def get_data(kernel_name, variance_value=1.0):
+def get_data(kernel_name, variance_value=1.0, n_traces=3, lengthscale=1.0):
     n_dims = 100
     n_frames = 20
-    n_traces = 3
+    #n_traces = 3
 
     x = np.linspace(0, 10, n_dims)[:, np.newaxis]
 
     if kernel_name == "RBF":
-        kernel = RBF(input_dim=1, variance=variance_value)
+        kernel = RBF(input_dim=1, variance=variance_value, lengthscale=lengthscale)
     elif kernel_name == "Brownian":
         kernel = Brownian(input_dim=1, variance=variance_value)
     elif kernel_name == "Matern32":
@@ -44,6 +41,8 @@ def get_data(kernel_name, variance_value=1.0):
         kernel = Spline(input_dim=1, variance=variance_value)
     elif kernel_name == "White":
         kernel = White(input_dim=1, variance=variance_value)
+    elif kernel_name == "StdPeriodic":
+        kernel = StdPeriodic(input_dim=1, variance=variance_value)
     else:
         raise ValueError("Unknown Kernel name")
 
@@ -57,7 +56,7 @@ def get_data(kernel_name, variance_value=1.0):
 
 ##################################################################
 
-
+st.title("Animating Samples from Gaussian Distributions")
 
 kernel_name = st.sidebar.selectbox("Kernel:", ["RBF",
                                                "Brownian",
@@ -69,12 +68,23 @@ kernel_name = st.sidebar.selectbox("Kernel:", ["RBF",
                                                "MLP",
                                                "PeriodicMatern32",
                                                "Spline",
-                                               "White"])
+                                               "White",
+                                               "StdPeriodic"])
 
 variance_value = st.sidebar.text_input("Variance:", 1.0)
 
+n_traces = int(st.sidebar.text_input("Number of Traces:", 3))
+
+lengthscale = None
+if kernel_name == "RBF":
+    lengthscale = float(st.sidebar.text_input("Length Scale:", 1.0))
+    print(lengthscale)
+
 if st.sidebar.button("Start"):
-    data = get_data(kernel_name, variance_value=variance_value)
+    data = get_data(kernel_name,
+                    variance_value=variance_value,
+                    n_traces=n_traces,
+                    lengthscale=lengthscale)
 
     traces = list(range(data.shape[1]))
 
@@ -109,5 +119,5 @@ if st.sidebar.button("Start"):
 
     for i in cycle(range(np.shape(data)[2])):
         animate(i)
-        print(i)
+        #print(i)
         # time.sleep(0.01)
